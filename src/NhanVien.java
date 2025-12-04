@@ -1,5 +1,6 @@
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.Set;
 
 class NhanVien {
@@ -22,12 +23,12 @@ class NhanVien {
         if (this == o) return true;
         if (!(o instanceof NhanVien)) return false;
         NhanVien nv = (NhanVien) o;
-        return id == nv.id;  // So sánh theo id
+        return id == nv.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id); // Hash theo id
+        return Objects.hash(id);
     }
 
     @Override
@@ -37,17 +38,35 @@ class NhanVien {
 }
 
 class Main {
+
+    public static boolean kiemTraTonTai(Set<NhanVien> ds, int id) {
+        return ds.contains(new NhanVien(id, "", 0));
+    }
+
     public static void main(String[] args) {
 
         Set<NhanVien> ds = new HashSet<>();
 
         ds.add(new NhanVien(1, "An", 25));
         ds.add(new NhanVien(2, "Bình", 30));
-        ds.add(new NhanVien(1, "An", 40)); // Trùng ID → không thêm
+        ds.add(new NhanVien(1, "An", 40));
         ds.add(new NhanVien(2, "An", 40));
+
         System.out.println("Danh sách nhân viên:");
         for (NhanVien nv : ds) {
             System.out.println(nv);
+        }
+
+        // ⭐ Nhập ID từ bàn phím
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhập ID cần kiểm tra: ");
+        int idCanTim = sc.nextInt();
+
+        // ⭐ Kiểm tra tồn tại
+        if (kiemTraTonTai(ds, idCanTim)) {
+            System.out.println("Nhân viên có ID " + idCanTim + " tồn tại trong danh sách.");
+        } else {
+            System.out.println("Không tìm thấy nhân viên có ID " + idCanTim);
         }
     }
 }
